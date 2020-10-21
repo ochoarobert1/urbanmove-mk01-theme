@@ -99,7 +99,7 @@ a {
     padding: .5rem 1rem;
     font-size: 1.1rem;
 
-    & input[type=checkbox] + label {
+    & input[type=checkbox]+label {
         display: block;
         margin: 0;
         cursor: pointer;
@@ -110,7 +110,7 @@ a {
         display: none;
     }
 
-    & input[type=checkbox] + label:before {
+    & input[type=checkbox]+label:before {
         content: "\2714";
         border: 3px solid @sblue;
         border-radius: 0.2em;
@@ -125,22 +125,22 @@ a {
         transition: 0.2s;
     }
 
-    & input[type=checkbox] + label:active:before {
+    & input[type=checkbox]+label:active:before {
         transform: scale(0);
     }
 
-    & input[type=checkbox]:checked + label:before {
+    & input[type=checkbox]:checked+label:before {
         background-color: @sblue;
         border-color: @sblue;
         color: #fff;
     }
 
-    & input[type=checkbox]:disabled + label:before {
+    & input[type=checkbox]:disabled+label:before {
         transform: scale(1);
         border-color: #aaa;
     }
 
-    & input[type=checkbox]:checked:disabled + label:before {
+    & input[type=checkbox]:checked:disabled+label:before {
         transform: scale(1);
         background-color: #bfb;
         border-color: #bfb;
@@ -156,6 +156,35 @@ a {
         font-size: 1.1rem;
         border-radius: 10px;
         border: 3px solid @sblue;
+    }
+
+    & input[type=time] {
+        font-size: 1.1rem;
+        border-radius: 10px;
+        border: 3px solid @sblue;
+    }
+
+    & input[type=number] {
+        font-size: 1.1rem;
+        border-radius: 10px;
+        border: 3px solid @sblue;
+    }
+
+    & .form-inline {
+        justify-content: space-between;
+        align-items: center;
+
+        & input {
+            .flex(0 0 60%);
+        }
+
+        & select {
+            .flex(0 0 60%);
+        }
+    }
+
+    & .input-repeat .form-inline {
+        margin-bottom: 1rem;
     }
 
     & .input-group {
@@ -184,6 +213,7 @@ a {
     padding: .5rem 4rem;
     font-size: 1.2rem;
     text-transform: uppercase;
+    margin-top: 1rem;
 
     &:hover {
         background: none transparent;
@@ -387,12 +417,18 @@ a {
     background-repeat: no-repeat !important;
     padding: 5rem 1rem;
 
-    .card-main-content p {
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: 1.5rem;
+    .card-main-content {
+        & p {
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 2.2rem;
+        }
+
+        & .card-main-content img {
+            min-width: 130px;
+        }
     }
 
     .row-cards {
@@ -551,5 +587,46 @@ a {
 
     & .contact-post-info {
         padding-top: 1rem;
+    }
+}
+
+
+.calculator-container {
+    min-height: 60vh;
+    background-size: 50% !important;
+    background-position: -15vw 0px !important;
+    background-repeat: no-repeat !important;
+    padding: 3rem 1rem;
+    background: white url(../images/main-bg.png);
+
+    & .title-container {
+        padding: 1rem 0;
+
+        & h2 {
+            position: relative;
+
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+                height: 4px;
+                width: 120px;
+                background: #1DB2D6;
+            }
+        }
+    }
+
+    & .form-result-container {
+        font-size: 1.3rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 16px #e2e2e2;
+        margin: 1rem 0;
+
+        & .form-result-item {
+            padding-bottom: 0.5rem;
+        }
     }
 }

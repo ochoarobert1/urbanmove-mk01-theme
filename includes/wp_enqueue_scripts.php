@@ -87,10 +87,22 @@ function urbanmove_load_js() {
         /*- SWIPER JS -*/
         wp_register_script('swiper-js', 'https://unpkg.com/swiper/swiper-bundle.min.js', [], '6.1.2', true);
         wp_enqueue_script('swiper-js');
+        
+        /* DATEPICKER SCRIPT */
+        wp_register_script('oinsurances_datepicker_script', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js', array('jquery'), '1.0.0', true);
+        wp_enqueue_script('oinsurances_datepicker_script');
+        
+        /* DATEPICKER LANG */
+        wp_register_script('oinsurances_datepicker_lang', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.es.min.js', array('jquery', 'oinsurances_datepicker_script'), '1.0.0', true);
+        wp_enqueue_script('oinsurances_datepicker_lang');
 
         /*- MAIN FUNCTIONS -*/
         wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery'), $version_remove, true);
         wp_enqueue_script('main-functions');
+
+        /*- MAIN FUNCTIONS -*/
+        wp_register_script('search-functions', get_template_directory_uri() . '/js/search-functions.js', array('jquery'), $version_remove, true);
+        wp_enqueue_script('search-functions');
 
         /* LOCALIZE MAIN SHORTCODE SCRIPT */
         wp_localize_script( 'main-functions', 'custom_admin_url', array(

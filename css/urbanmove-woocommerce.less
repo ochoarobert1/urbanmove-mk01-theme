@@ -28,3 +28,73 @@ CHECKOUT PAGE BOOTSTRAP CORRECTIONS
     flex: 0 0 48%;
     max-width: 48%;
 }
+
+
+#top-menu .current-menu-item a::before,
+#top-menu .current_page_item a::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+}
+
+#top-menu li a:before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    left: 0;
+    right: 100%;
+    bottom: 20%;
+    background: #9f7c26;
+    /*** COLOR DE LA LINEA INFERIOR ***/
+    height: 5px;
+    /*** GROSOR DE LA LINEA INFERIOR ***/
+    -webkit-transition-property: right;
+    transition-property: right;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+#top-menu li a:hover {
+    opacity: 1 !important;
+}
+
+#top-menu li a:hover:before {
+    right: 0;
+}
+
+#top-menu li li a:before {
+    bottom: 20%;
+}
+
+body.woocommerce span.onsale {
+    display: none
+}
+
+.etiqueta-nuevo {
+    padding: 2px 9px;
+    color: #fff;
+    background: #9f7c26;
+    width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 1px;
+}
+
+.destacado-menu>a {
+    text-decoration: none !important;
+    padding: 7px !important;
+    color: #ac7d14 !important;
+    background-color: #ffffff !important;
+    border-radius: 5px !important;
+}
+
+/* DOS COLUMNAS EN MOBILE */
+@media (max-width: 479px) {
+    .woocommerce-page ul.products li.product:nth-child(n) {
+        margin: 0 0 11.5% !important;
+        width: 45% !important;
+    }
+}

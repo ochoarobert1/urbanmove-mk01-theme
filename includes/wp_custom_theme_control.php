@@ -186,19 +186,18 @@ function urbanmove_sanitize_url( $url ) {
 /* --------------------------------------------------------------
 CUSTOM CONTROL PANEL
 -------------------------------------------------------------- */
-/*
+
 function register_urbanmove_settings() {
-    register_setting( 'urbanmove-settings-group', 'monday_start' );
-    register_setting( 'urbanmove-settings-group', 'monday_end' );
-    register_setting( 'urbanmove-settings-group', 'monday_all' );
+    register_setting( 'urbanmove-settings-group', 'origen_matrix' );
+    register_setting( 'urbanmove-settings-group', 'destino_matrix' );
 }
 
 add_action('admin_menu', 'urbanmove_custom_panel_control');
 
 function urbanmove_custom_panel_control() {
     add_menu_page(
-        __( 'Panel de Control', 'urbanmove' ),
-        __( 'Panel de Control','urbanmove' ),
+        __( 'Distance Matrix', 'urbanmove' ),
+        __( 'Distance Matrix','urbanmove' ),
         'manage_options',
         'urbanmove-control-panel',
         'urbanmove_control_panel_callback',
@@ -212,7 +211,7 @@ function urbanmove_control_panel_callback() {
     ob_start();
 ?>
 <div class="urbanmove-admin-header-container">
-    <img src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="urbanmove" />
+    <img src="<?php echo get_template_directory_uri(); ?>/images/logo-color.png" alt="urbanmove" />
     <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 </div>
 <form method="post" action="options.php" class="urbanmove-admin-content-container">
@@ -221,11 +220,23 @@ function urbanmove_control_panel_callback() {
     <div class="urbanmove-admin-content-item">
         <table class="form-table">
             <tr valign="center">
-                <th scope="row"><?php _e('Monday', 'urbanmove'); ?></th>
+                <th scope="row"><?php _e('Tabla de Origen', 'urbanmove'); ?></th>
+            </tr>
+            <tr>
                 <td>
-                    <label for="monday_start">Starting Hour: <input type="time" name="monday_start" value="<?php echo esc_attr( get_option('monday_start') ); ?>"></label>
-                    <label for="monday_end">Ending Hour: <input type="time" name="monday_end" value="<?php echo esc_attr( get_option('monday_end') ); ?>"></label>
-                    <label for="monday_all">All Day: <input type="checkbox" name="monday_all" value="1" <?php checked( get_option('monday_all'), 1 ); ?>></label>
+                    <textarea name="origen_matrix" id="origen_matrix" cols="100" rows="10" style="max-width: 100%; width: 100%;"><?php echo esc_attr( get_option('origen_matrix') ); ?></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="urbanmove-admin-content-item">
+        <table class="form-table">
+            <tr valign="center">
+                <th scope="row"><?php _e('Tabla de Destino', 'urbanmove'); ?></th>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="destino_matrix" id="destino_matrix" cols="100" rows="10" style="max-width: 100%; width: 100%;"><?php echo esc_attr( get_option('destino_matrix') ); ?></textarea>
                 </td>
             </tr>
         </table>
@@ -238,4 +249,3 @@ function urbanmove_control_panel_callback() {
     $content = ob_get_clean();
     echo $content;
 }
-*/

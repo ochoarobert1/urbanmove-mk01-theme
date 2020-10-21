@@ -72,6 +72,10 @@ function urbanmove_load_css() {
         //wp_register_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap', false, $version_remove, 'all');
         //wp_enqueue_style('google-fonts');
 
+        /* DATEPICKER STYLE */
+        wp_register_style('oinsurances_datepicker_style', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.min.css', false, '1.9.0', 'all');
+        wp_enqueue_style('oinsurances_datepicker_style');
+
         /*- MAIN STYLE -*/
         wp_register_style('main-style', get_template_directory_uri() . '/css/urbanmove-style.css', false, $version_remove, 'all');
         wp_enqueue_style('main-style');
@@ -81,6 +85,8 @@ function urbanmove_load_css() {
             wp_register_style('main-woocommerce-style', get_template_directory_uri() . '/css/urbanmove-woocommerce.css', false, $version_remove, 'all');
             wp_enqueue_style('main-woocommerce-style');
         }
+
+        
 
         /*- MAIN MEDIAQUERIES -*/
         wp_register_style('main-mediaqueries', get_template_directory_uri() . '/css/urbanmove-mediaqueries.css', array('main-style'), $version_remove, 'all');

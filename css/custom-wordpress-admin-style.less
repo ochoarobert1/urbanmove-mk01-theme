@@ -120,7 +120,7 @@ body.toplevel_page_urbanmove-control-panel {
         display: -ms-flexbox;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
 
         & .urbanmove-admin-content-title {
@@ -143,6 +143,7 @@ body.toplevel_page_urbanmove-control-panel {
             border-radius: 10px;
             padding: 1rem;
             margin-bottom: 1rem;
+            margin-right: 1.5rem;
 
             & .form-table th {
                 width: 170px;
@@ -153,6 +154,10 @@ body.toplevel_page_urbanmove-control-panel {
                 vertical-align: middle;
                 margin-bottom: 5px;
                 text-align: right;
+            }
+
+            & textarea {
+                text-align: left;
             }
         }
     }
