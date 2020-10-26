@@ -28,6 +28,12 @@ function documentCustomLoad() {
         }
     });
 
+    Date.prototype.addHours = function(h) {
+        this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+        return this;
+    }
+    var todayDate = new Date().addHours(12);
+
     let startpicker = flatpickr('#fechaOrigen', {
         enableTime: true,
         showAlways: false,
@@ -45,7 +51,7 @@ function documentCustomLoad() {
                 shorthand: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
             },
         },
-        minDate: 'today',
+        minDate: todayDate,
         onClose: function(selectedDates, dateStr, instance) {
             endpicker.set('minDate', dateStr);
         },
@@ -72,7 +78,7 @@ function documentCustomLoad() {
     });
 
     jQuery('input[name=checkida]').on('change', function(e) {
-        if( jQuery('#checkida').is(':checked')) { 
+        if (jQuery('#checkida').is(':checked')) {
             jQuery('#fechaRegresoCont').removeClass('d-none');
         } else {
             jQuery('#fechaRegresoCont').addClass('d-none');

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="search-form-item col-12">
             <input type="radio" id="checkida" name="checkida" value="1" checked="checked" class="form-checkbox" />
-            <label for="checkida"><?php _e('Ida y Regreso', 'urbanmove'); ?></label>
+            <label for="checkida"><?php _e('Ida y Vuelta', 'urbanmove'); ?></label>
 
             <input type="radio" id="checkida2" name="checkida" value="2" class="form-checkbox" />
             <label for="checkida2"><?php _e('Solo Ida', 'urbanmove'); ?></label>
@@ -42,7 +42,7 @@
         <div class="search-form-item col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="form-inline">
                 <label for="quantity"><?php _e('Cantidad de pasajeros', 'urbanmove'); ?></label>
-                <input name="quantity" min="1" max="5" id="quantity" type="number" class="form-control" placeholder="<?php _e('Seleccione la cantidad de pasajeros', 'urbanmove'); ?>" autocomplete="off" />
+                <input name="quantity" min="1" max="4" id="quantity" type="number" class="form-control" placeholder="<?php _e('Seleccione la cantidad de pasajeros', 'urbanmove'); ?>" autocomplete="off" />
             </div>
         </div>
         <div class="input-repeat-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

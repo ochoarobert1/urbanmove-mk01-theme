@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="form-result-item col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <?php if (isset($_POST['checkida'])) { ?>
-                                    <?php $check = ($_POST['checkida'] == 1) ? 'Ida y Regreso' : 'Solo Ida'; ?>
+                                    <?php $check = ($_POST['checkida'] == 1) ? 'Ida y Vuelta' : 'Solo Ida'; ?>
                                 <?php } ?>
                                 <strong><?php _e('Modalidad', 'urbanmove'); ?>:</strong> <?php echo $check; ?>
                             </div>
@@ -102,7 +102,7 @@
                                             <?php $product = get_page_by_path('reserva-de-transporte', OBJECT, 'product'); ?>
                                             <?php $custom_price = get_total_distance_price($distance_in_km, $_POST['checkida']); ?>
                                             <?php $url = add_custom_gets_url($product->ID, $custom_price, $_POST['checkida'], $_POST['search-origen'], $_POST['search-destino'], $_POST['search-fecha-origen'], $_POST['search-fecha-regreso'], $_POST['quantity'], $_POST['pasajero']); ?>
-                                            <td class="table-button" colspan="3"><a class="btn btn-md btn-primary" href="<?php echo $url; ?>"><?php _e('Adquirir Servicio', 'urbanmove'); ?></a></td>
+                                            <td class="table-button" colspan="3"><a class="btn btn-md btn-primary" href="<?php echo $url; ?>"><?php _e('Completar Reserva', 'urbanmove'); ?></a></td>
                                         </tr>
                                     </table>
                                 </div>

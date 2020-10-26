@@ -425,6 +425,7 @@ a:hover {
   padding-top: 2rem;
   padding-right: 20%;
   font-size: 1.1rem;
+  min-height: 235px;
 }
 .the-cards .card-testimonials .testimonial-item-wrapper .testimonial-content .star-container {
   font-size: 0.95rem;
