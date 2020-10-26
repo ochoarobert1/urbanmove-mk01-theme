@@ -14,56 +14,69 @@ function documentCustomLoad() {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
-        }
-    });
-
-    jQuery('#fechaOrigen').datepicker({
-        minDate: new Date(),
-        timepicker: true,
-        autoClose: true,
-        language: {
-            days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            daysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-            daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            today: 'Hoy',
-            clear: 'Limpiar',
-            dateFormat: 'dd/mm/yyyy',
-            timeFormat: 'hh:ii aa',
-            firstDay: 1
         },
-        onSelect(formattedDate, date, inst) {
-            var dateIncr = new Date(date);
-            dateIncr.setDate(dateIncr.getDate());
-            jQuery('#fechaRegreso').datepicker().data('datepicker').update('minDate', dateIncr);
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3
+            }
         }
     });
 
-    jQuery('#fechaRegreso').datepicker({
-        minDate: new Date(),
-        autoClose: true,
-        timepicker: true,
-        language: {
-            days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            daysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-            daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-            today: 'Hoy',
-            clear: 'Limpiar',
-            dateFormat: 'dd/mm/yyyy',
-            timeFormat: 'hh:ii aa',
-            firstDay: 1
-        }
+    let startpicker = flatpickr('#fechaOrigen', {
+        enableTime: true,
+        showAlways: false,
+        theme: 'material_blue',
+        time_24hr: true,
+        altInput: true,
+        altFormat: 'F j, Y H:i',
+        dateFormat: 'Y-m-d H:i',
+        locale: {
+            firstDayofWeek: 0,
+            months: {
+                longhand: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            },
+            weekdays: {
+                shorthand: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+            },
+        },
+        minDate: 'today',
+        onClose: function(selectedDates, dateStr, instance) {
+            endpicker.set('minDate', dateStr);
+        },
     });
 
-}
+    let endpicker = flatpickr('#fechaRegreso', {
+        enableTime: true,
+        showAlways: false,
+        theme: 'material_blue',
+        time_24hr: true,
+        altInput: true,
+        altFormat: 'F j, Y H:i',
+        dateFormat: 'Y-m-d H:i',
+        locale: {
+            firstDayofWeek: 0,
+            months: {
+                longhand: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            },
+            weekdays: {
+                shorthand: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+            },
+        },
+        minDate: jQuery('#fechaOrigen').attr('value')
+    });
 
-function SFGetFormattedDate(date) {
-    var dateParts = date.split("/");
-    var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-    return dateObject;
+    jQuery('input[name=checkida]').on('change', function(e) {
+        if( jQuery('#checkida').is(':checked')) { 
+            jQuery('#fechaRegresoCont').removeClass('d-none');
+        } else {
+            jQuery('#fechaRegresoCont').addClass('d-none');
+        }
+    });
 }
-
 document.addEventListener("DOMContentLoaded", documentCustomLoad, false);

@@ -1,7 +1,8 @@
 <?php
-function urbanmove_load_js() {
+function urbanmove_load_js()
+{
     $version_remove = NULL;
-    if (!is_admin()){
+    if (!is_admin()) {
         if ($_SERVER['REMOTE_ADDR'] == '::1') {
 
             /*- MODERNIZR ON LOCAL  -*/
@@ -39,7 +40,6 @@ function urbanmove_load_js() {
             /*- AOS ON LOCAL -*/
             wp_register_script('aos-js', get_template_directory_uri() . '/js/aos.js', array('jquery'), '3.0.0', true);
             wp_enqueue_script('aos-js');
-
         } else {
 
             /*- MODERNIZR -*/
@@ -81,20 +81,19 @@ function urbanmove_load_js() {
             /*- AOS -*/
             wp_register_script('aos-js', 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js', array('jquery'), '2.3.4', true);
             wp_enqueue_script('aos-js');
-
         }
 
         /*- SWIPER JS -*/
         wp_register_script('swiper-js', 'https://unpkg.com/swiper/swiper-bundle.min.js', [], '6.1.2', true);
         wp_enqueue_script('swiper-js');
-        
+
         /* DATEPICKER SCRIPT */
-        wp_register_script('oinsurances_datepicker_script', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js', array('jquery'), '1.0.0', true);
+        wp_register_script('oinsurances_datepicker_script', 'https://cdn.jsdelivr.net/npm/flatpickr', array('jquery'), '1.0.0', true);
         wp_enqueue_script('oinsurances_datepicker_script');
-        
-        /* DATEPICKER LANG */
-        wp_register_script('oinsurances_datepicker_lang', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.es.min.js', array('jquery', 'oinsurances_datepicker_script'), '1.0.0', true);
-        wp_enqueue_script('oinsurances_datepicker_lang');
+
+        /* DATEPICKER SCRIPT */
+        wp_register_script('oinsurances_datepicker_script_locale', 'https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.6/l10n/es.min.js', array('jquery' . 'oinsurances_datepicker_script'), '1.0.0', true);
+        wp_enqueue_script('oinsurances_datepicker_script_locale');
 
         /*- MAIN FUNCTIONS -*/
         wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery'), $version_remove, true);
@@ -105,14 +104,14 @@ function urbanmove_load_js() {
         wp_enqueue_script('search-functions');
 
         /* LOCALIZE MAIN SHORTCODE SCRIPT */
-        wp_localize_script( 'main-functions', 'custom_admin_url', array(
+        wp_localize_script('main-functions', 'custom_admin_url', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
 
-        if ( is_single('post') && comments_open() && get_option( 'thread_comments' ) ) {
-            wp_enqueue_script( 'comment-reply' );
+        if (is_single('post') && comments_open() && get_option('thread_comments')) {
+            wp_enqueue_script('comment-reply');
         } else {
-            wp_deregister_script( 'comment-reply' );
+            wp_deregister_script('comment-reply');
         }
     }
 }

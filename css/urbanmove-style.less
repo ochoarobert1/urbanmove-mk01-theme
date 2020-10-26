@@ -183,6 +183,10 @@ a {
         }
     }
 
+    & .form-inline-repeat {
+        margin-bottom: .5rem;
+    }
+
     & .input-repeat .form-inline {
         margin-bottom: 1rem;
     }
@@ -202,6 +206,11 @@ a {
         & input {
             border-radius: 10px;
         }
+    }
+
+
+    & .input-repeat {
+        padding: 0 !important;
     }
 }
 
@@ -628,5 +637,46 @@ a {
         & .form-result-item {
             padding-bottom: 0.5rem;
         }
+    }
+}
+
+.table-button {
+    text-align: right;
+}
+
+.main-page-container {
+    background: white;
+    padding: 2.5rem;
+}
+
+.wdm_options_table {
+    margin-top: 1rem;
+    display: table;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    width: 100%;
+
+    & tr {
+            
+        &:nth-child(2n + 1) {
+            background: #f1f1f1;
+        }
+
+        & td, th {
+            padding: 0.5rem !important;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.variation {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    
+
+    & dt, dd {
+        padding: 0.2rem !important;
+        font-size: 0.9rem;
+        line-height: 1.3rem;
     }
 }
