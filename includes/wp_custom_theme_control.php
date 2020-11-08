@@ -190,6 +190,9 @@ CUSTOM CONTROL PANEL
 function register_urbanmove_settings() {
     register_setting( 'urbanmove-settings-group', 'origen_matrix' );
     register_setting( 'urbanmove-settings-group', 'destino_matrix' );
+    register_setting( 'urbanmove-settings-group', 'precio_airport' );
+    register_setting( 'urbanmove-settings-group', 'precio_train' );
+    register_setting( 'urbanmove-settings-group', 'precio_else' );
 }
 
 add_action('admin_menu', 'urbanmove_custom_panel_control');
@@ -220,7 +223,7 @@ function urbanmove_control_panel_callback() {
     <div class="urbanmove-admin-content-item">
         <table class="form-table">
             <tr valign="center">
-                <th scope="row"><?php _e('Tabla de Origen', 'urbanmove'); ?></th>
+                <th scope="row"><?php _e('Tabla de Origenes / Destinos', 'urbanmove'); ?></th>
             </tr>
             <tr>
                 <td>
@@ -232,11 +235,35 @@ function urbanmove_control_panel_callback() {
     <div class="urbanmove-admin-content-item">
         <table class="form-table">
             <tr valign="center">
-                <th scope="row"><?php _e('Tabla de Destino', 'urbanmove'); ?></th>
+                <th scope="row"><?php _e('Precio (Aeropuerto)', 'urbanmove'); ?></th>
             </tr>
             <tr>
                 <td>
-                    <textarea name="destino_matrix" id="destino_matrix" cols="100" rows="10" style="max-width: 100%; width: 100%;"><?php echo esc_attr( get_option('destino_matrix') ); ?></textarea>
+                    <textarea name="precio_airport" id="precio_airport" cols="100" rows="10" style="max-width: 100%; width: 100%;"><?php echo esc_attr( get_option('precio_airport') ); ?></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="urbanmove-admin-content-item">
+        <table class="form-table">
+            <tr valign="center">
+                <th scope="row"><?php _e('Precio (Estacion de Trenes)', 'urbanmove'); ?></th>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="precio_train" id="precio_train" cols="100" rows="10" style="max-width: 100%; width: 100%;"><?php echo esc_attr( get_option('precio_train') ); ?></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="urbanmove-admin-content-item">
+        <table class="form-table">
+            <tr valign="center">
+                <th scope="row"><?php _e('Precio (Cualquier Destino)', 'urbanmove'); ?></th>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="precio_else" id="precio_else" cols="100" rows="10" style="max-width: 100%; width: 100%;"><?php echo esc_attr( get_option('precio_else') ); ?></textarea>
                 </td>
             </tr>
         </table>

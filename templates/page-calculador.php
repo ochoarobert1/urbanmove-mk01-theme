@@ -81,26 +81,28 @@
                             <?php } ?>
                             <div class="form-result-item col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <hr>
-                                <?php $array_origen = get_geocoding_coodinates($_POST['search-origen']); ?>
+                                <?php /*
+                                $array_origen = get_geocoding_coodinates($_POST['search-origen']); ?>
                                 <?php $array_destino = get_geocoding_coodinates($_POST['search-destino']); ?>
+                                
                                 <?php $distance = get_distance_matrix($array_origen, $array_destino); ?>
                                 <?php $distance = $distance / 1000; ?>
-                                <?php $distance_in_km = round($distance, 1); ?>
+                                <?php $distance_in_km = round($distance, 1); */ ?>
                                 <div class="table-responsive">
                                     <table class="table table-stripped">
                                         <tr>
-                                            <th>Distancia</th>
+                                            <th>Modalidad</th>
                                             <th>Precio unitario</th>
                                             <th>Total</th>
                                         </tr>
                                         <tr>
-                                            <td><?php echo $distance_in_km; ?> km</td>
-                                            <td><?php echo get_woocommerce_currency_symbol() . ' ' . get_unique_distance_price($distance_in_km); ?></td>
-                                            <td><?php echo get_woocommerce_currency_symbol() . ' ' . get_total_distance_price($distance_in_km, $_POST['checkida']); ?></td>
+                                            <td><?php echo $check; ?></td>
+                                            <td><?php echo get_woocommerce_currency_symbol() . ' ' . get_unique_distance_price_table($_POST['search-origen'], $_POST['search-destino']); ?></td>
+                                            <td><?php echo get_woocommerce_currency_symbol() . ' ' . get_total_distance_price_table($_POST['search-origen'], $_POST['search-destino'], $_POST['checkida']); ?></td>
                                         </tr>
                                         <tr>
                                             <?php $product = get_page_by_path('reserva-de-transporte', OBJECT, 'product'); ?>
-                                            <?php $custom_price = get_total_distance_price($distance_in_km, $_POST['checkida']); ?>
+                                            <?php $custom_price = get_total_distance_price_table($_POST['search-origen'], $_POST['search-destino'], $_POST['checkida']); ?>
                                             <?php $url = add_custom_gets_url($product->ID, $custom_price, $_POST['checkida'], $_POST['search-origen'], $_POST['search-destino'], $_POST['search-fecha-origen'], $_POST['search-fecha-regreso'], $_POST['quantity'], $_POST['pasajero']); ?>
                                             <td class="table-button" colspan="3"><a class="btn btn-md btn-primary" href="<?php echo $url; ?>"><?php _e('Completar Reserva', 'urbanmove'); ?></a></td>
                                         </tr>

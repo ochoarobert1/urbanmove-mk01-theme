@@ -158,13 +158,15 @@ function get_geocoding_coodinates($coordinates)
 
 function get_distance_matrix($origen, $destino)
 {
-    $url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' . urlencode($origen) . ';' . urlencode($destino) . '?alternatives=false&geometries=geojson&steps=false&access_token=pk.eyJ1Ijoib2Nob2Fyb2JlcnQxIiwiYSI6ImNrZjVsa3QwMTBleXIyem54azRhNjRkbzUifQ.kaUskuoajoOKezeLtjjFSg';
+    $url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' . $origen . ';' . $destino . '?alternatives=false&geometries=geojson&steps=false&access_token=pk.eyJ1Ijoib2Nob2Fyb2JlcnQxIiwiYSI6ImNrZjVsa3QwMTBleXIyem54azRhNjRkbzUifQ.kaUskuoajoOKezeLtjjFSg';
+    var_dump($url);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $result = curl_exec($ch);
     curl_close($ch);
     $resultado = json_decode($result);
+    var_dump($resultado);
     return $resultado->routes[0]->distance;
 }
 
@@ -201,6 +203,48 @@ function get_total_distance_price($distancia, $check)
     }
     return $precio;
 }
+
+function get_unique_distance_price_table($origen, $destino)
+{
+    $arr_origenes = explode(',', get_option('origen_matrix'));
+    $precio_airport = explode(',', get_option('precio_airport'));
+    $precio_train = explode(',', get_option('precio_train'));
+    $precio_else = explode(',', get_option('precio_else'));
+
+    $clave = array_search($destino, $arr_origenes);
+    if (strpos($origen, 'Aeropuerto') !== false) {
+        $precio = $precio_airport[$clave];
+    } elseif (strpos($origen, 'Tren') !== false) {
+        $precio = $precio_train[$clave];
+    } else {
+        $precio = $precio_else[$clave];
+    }
+    return $precio;
+}
+
+function get_total_distance_price_table($origen, $destino, $check)
+{
+    $arr_origenes = explode(',', get_option('origen_matrix'));
+    $precio_airport = explode(',', get_option('precio_airport'));
+    $precio_train = explode(',', get_option('precio_train'));
+    $precio_else = explode(',', get_option('precio_else'));
+
+    $clave = array_search($destino, $arr_origenes);
+    if (strpos($origen, 'Aeropuerto') !== false) {
+        $precio = $precio_airport[$clave];
+    } elseif (strpos($origen, 'Tren') !== false) {
+        $precio = $precio_train[$clave];
+    } else {
+        $precio = $precio_else[$clave];
+    }
+
+    if ($check == 1) {
+        $precio = $precio + $precio;
+    }
+    return $precio;
+}
+
+
 
 function add_custom_gets_url($product_id, $custom_price, $checkida, $origen, $destino, $fecha_origen, $fecha_retorno, $cantidad, $pasajeros)
 {
@@ -405,4 +449,149 @@ add_filter('wc_add_to_cart_message', 'remove_cart_message');
 function remove_cart_message()
 {
     return;
+}
+
+// Hook in
+add_filter('woocommerce_checkout_fields', 'custom_override_checkout_fields', 9999);
+add_filter('woocommerce_default_address_fields', 'custom_override_checkout_fields', 9999);
+
+// Our hooked in function - $fields is passed via the filter!
+function custom_override_checkout_fields($fields)
+{
+    $fields['billing']['billing_address_1']['label'] = 'Dirección de Facturación (requerido para pago con tarjeta)';
+    return $fields;
+}
+
+add_filter('woocommerce_billing_fields', 'custom_woocommerce_billing_fields');
+
+function custom_woocommerce_billing_fields($fields)
+{
+
+    $fields['billing_required'] = array(
+        'label' => __('Voy a requerir factura impresa', 'woocommerce'), // Add custom field label
+        'placeholder' => _x('Seleccione si se necesita una factura fiscal impresa', 'placeholder', 'woocommerce'), // Add custom field placeholder
+        'required' => false, // if field is required or not
+        'clear' => false, // add clear or not
+        'type' => 'checkbox', // add field type
+        'priority' => 41,
+        'class' => array('form-row-custom')    // add class name
+    );
+
+    $fields['billing_nif'] = array(
+        'label' => __('NIF', 'woocommerce'), // Add custom field label
+        'placeholder' => _x('Ingrese el NIF de la empresa', 'placeholder', 'woocommerce'), // Add custom field placeholder
+        'required' => false, // if field is required or not
+        'clear' => false, // add clear or not
+        'type' => 'text', // add field type
+        'priority' => 32,
+        'class' => array('form-row-custom')    // add class name
+    );
+
+    return $fields;
+}
+
+add_filter('woocommerce_get_country_locale', 'wpse_120741_wc_change_state_label_locale');
+function wpse_120741_wc_change_state_label_locale($locale)
+{
+    $locale['ES']['address_1']['label'] = __('Dirección de Facturación (requerido para pago con tarjeta)', 'woocommerce');
+    return $locale;
+}
+
+
+
+/**
+ * Add the field to the checkout
+ */
+add_action('woocommerce_after_order_notes', 'my_custom_checkout_field');
+
+function my_custom_checkout_field($checkout)
+{
+
+    echo '<div id="my_custom_checkout_field"><h3>' . __('Datos de Recogida', 'urbanmove') . '</h3>';
+
+    woocommerce_form_field('dir_recogida', array(
+        'type'          => 'textarea',
+        'class'         => array('custom_field-class form-row-wide'),
+        'label'         => __('Dirección de Recogida'),
+        'placeholder'   => __('Ingrese donde pasaremos por ud.'),
+    ), $checkout->get_value('dir_recogida'));
+
+    
+
+    echo '</div>';
+}
+
+add_filter('woocommerce_email_order_meta_keys', 'my_custom_order_meta_keys');
+
+function my_custom_order_meta_keys( $keys ) {
+     $keys[] = 'Dirección de Recogida'; // This will look for a custom field called 'Tracking Code' and add it to emails
+     $keys[] = 'Voy a requerir factura impresa'; // This will look for a custom field called 'Tracking Code' and add it to emails
+     $keys[] = 'NIF'; // This will look for a custom field called 'Tracking Code' and add it to emails
+     return $keys;
+}
+
+function kia_display_email_order_meta( $order, $sent_to_admin, $plain_text ) { 
+	$nif = $order->get_meta( '_billing_nif' ); 
+	$factura = $order->get_meta( '_billing_required' ); 
+    $direccion = $order->get_meta( 'dir_recogida' ); 
+
+    echo '<h2 style="color: #007e98;font-family: &quot;Helvetica Neue&quot;, Helvetica, Roboto, Arial, sans-serif;font-size: 18px;font-weight: bold;line-height: 130%;margin: 0 0 18px;text-align: left">Datos Adicionales</h2>';
+
+    if ($nif != '') {
+        echo '<p><strong>'.__('NIF').':</strong> ' . $nif . '</p>';
+    }
+    if ($factura != '') {
+        $checktext = ($factura == 1) ? 'Si' : 'No';
+        echo '<p><strong>'.__('Se necesita factura').':</strong> ' . $checktext . '</p>';
+    } else {
+        echo '<p><strong>'.__('Se necesita factura').':</strong> No </p>';
+    }
+    
+    if ($direccion != '') {
+        echo '<p><strong>'.__('Dirección de Recogida').':</strong><br> ' . $direccion . '</p>';
+    }
+	
+} 
+add_action('woocommerce_email_customer_details', 'kia_display_email_order_meta', 30, 3 );
+
+/**
+ * Update the order meta with field value
+ */
+add_action( 'woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta' );
+
+function my_custom_checkout_field_update_order_meta( $order_id ) {
+    if ( ! empty( $_POST['dir_recogida'] ) ) {
+        update_post_meta( $order_id, 'dir_recogida', sanitize_text_field( $_POST['dir_recogida'] ) );
+    }
+
+    if ( ! empty( $_POST['_billing_required'] ) ) {
+        update_post_meta( $order_id, '_billing_required', sanitize_text_field( $_POST['_billing_required'] ) );
+    }
+
+    if ( ! empty( $_POST['_billing_nif'] ) ) {
+        update_post_meta( $order_id, 'NIF', sanitize_text_field( $_POST['_billing_nif'] ) );
+    }
+}
+
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'custom_billing_display_admin_order_meta', 10, 1 );
+function custom_billing_display_admin_order_meta( $order ){
+    $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+    $nif = get_post_meta( $order_id, '_billing_nif', true );
+    if ($nif != '') {
+        echo '<p><strong>'.__('NIF').':</strong> ' . $nif . '</p>';
+    }
+    $check = get_post_meta( $order_id, '_billing_required', true );
+    if ($check != '') {
+        $checktext = ($check == 1) ? 'Si' : 'No';
+        echo '<p><strong>'.__('Se necesita factura').':</strong> ' . $checktext . '</p>';
+    }
+}
+
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'custom_notes_display_admin_order_meta', 10, 1 );
+function custom_notes_display_admin_order_meta( $order ){
+    $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+    $direccion = get_post_meta( $order_id, 'dir_recogida', true );
+    if ($direccion != '') {
+        echo '<p><strong>'.__('Dirección de Recogida').':</strong><br> ' . $direccion . '</p>';
+    }
 }

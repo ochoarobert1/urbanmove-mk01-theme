@@ -1,6 +1,6 @@
 <?php $origenes = get_option('origen_matrix'); ?>
 <?php $arr_origenes = explode(',', $origenes); ?>
-<?php $destinos = get_option('destino_matrix'); ?>
+<?php $destinos = get_option('origen_matrix'); ?>
 <?php $arr_destinos = explode(',', $origenes); ?>
 <form id="searchForm" method="POST" action="<?php echo home_url('/calculador'); ?>" class="search-form-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
     <div class="row">
