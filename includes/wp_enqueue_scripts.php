@@ -96,11 +96,11 @@ function urbanmove_load_js()
         wp_enqueue_script('oinsurances_datepicker_script_locale');
 
         /*- MAIN FUNCTIONS -*/
-        wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.js', array('jquery'), $version_remove, true);
+        wp_register_script('main-functions', get_template_directory_uri() . '/js/functions.min.js', array('jquery'), $version_remove, true);
         wp_enqueue_script('main-functions');
 
         /*- MAIN FUNCTIONS -*/
-        wp_register_script('search-functions', get_template_directory_uri() . '/js/search-functions.js', array('jquery'), $version_remove, true);
+        wp_register_script('search-functions', get_template_directory_uri() . '/js/search-functions.min.js', array('jquery'), $version_remove, true);
         wp_enqueue_script('search-functions');
 
         /* LOCALIZE MAIN SHORTCODE SCRIPT */

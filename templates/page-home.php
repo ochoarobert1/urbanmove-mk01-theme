@@ -178,6 +178,9 @@
                         <div class="contact-info-item">
                             <i class="fa fa-twitter"></i> <?php echo get_post_meta(get_the_ID(), 'umv_home_contact_twitter', true); ?>
                         </div>
+                        <div class="contact-info-item">
+                            <i class="fa fa-linkedin"></i> <?php echo get_post_meta(get_the_ID(), 'umv_home_contact_linkedin', true); ?>
+                        </div>
                         <div class="contact-post-info">
                             <?php echo get_post_meta(get_the_ID(), 'umv_home_contact_posttext', true); ?>
                         </div>

@@ -468,7 +468,7 @@ function custom_woocommerce_billing_fields($fields)
 {
 
     $fields['billing_required'] = array(
-        'label' => __('Voy a requerir factura impresa', 'woocommerce'), // Add custom field label
+        'label' => __('Voy a requerir envío de factura por email', 'woocommerce'), // Add custom field label
         'placeholder' => _x('Seleccione si se necesita una factura fiscal impresa', 'placeholder', 'woocommerce'), // Add custom field placeholder
         'required' => false, // if field is required or not
         'clear' => false, // add clear or not
@@ -512,7 +512,8 @@ function my_custom_checkout_field($checkout)
     woocommerce_form_field('dir_recogida', array(
         'type'          => 'textarea',
         'class'         => array('custom_field-class form-row-wide'),
-        'label'         => __('Dirección de Recogida'),
+        'label'         => __('Direccion, Hotel ó Número de Vuelo'),
+        'required'      => true,
         'placeholder'   => __('Ingrese donde pasaremos por ud.'),
     ), $checkout->get_value('dir_recogida'));
 
@@ -524,8 +525,8 @@ function my_custom_checkout_field($checkout)
 add_filter('woocommerce_email_order_meta_keys', 'my_custom_order_meta_keys');
 
 function my_custom_order_meta_keys( $keys ) {
-     $keys[] = 'Dirección de Recogida'; // This will look for a custom field called 'Tracking Code' and add it to emails
-     $keys[] = 'Voy a requerir factura impresa'; // This will look for a custom field called 'Tracking Code' and add it to emails
+     $keys[] = 'Direccion, Hotel ó Número de Vuelo '; // This will look for a custom field called 'Tracking Code' and add it to emails
+     $keys[] = 'Voy a requerir envío de factura por email'; // This will look for a custom field called 'Tracking Code' and add it to emails
      $keys[] = 'NIF'; // This will look for a custom field called 'Tracking Code' and add it to emails
      return $keys;
 }
@@ -542,13 +543,13 @@ function kia_display_email_order_meta( $order, $sent_to_admin, $plain_text ) {
     }
     if ($factura != '') {
         $checktext = ($factura == 1) ? 'Si' : 'No';
-        echo '<p><strong>'.__('Se necesita factura').':</strong> ' . $checktext . '</p>';
+        echo '<p><strong>'.__('Requiere envío de factura por email').':</strong> ' . $checktext . '</p>';
     } else {
-        echo '<p><strong>'.__('Se necesita factura').':</strong> No </p>';
+        echo '<p><strong>'.__('Requiere envío de factura por email').':</strong> No </p>';
     }
     
     if ($direccion != '') {
-        echo '<p><strong>'.__('Dirección de Recogida').':</strong><br> ' . $direccion . '</p>';
+        echo '<p><strong>'.__('Direccion, Hotel ó Número de Vuelo').':</strong><br> ' . $direccion . '</p>';
     }
 	
 } 
@@ -583,7 +584,7 @@ function custom_billing_display_admin_order_meta( $order ){
     $check = get_post_meta( $order_id, '_billing_required', true );
     if ($check != '') {
         $checktext = ($check == 1) ? 'Si' : 'No';
-        echo '<p><strong>'.__('Se necesita factura').':</strong> ' . $checktext . '</p>';
+        echo '<p><strong>'.__('Requiere envío de factura por email').':</strong> ' . $checktext . '</p>';
     }
 }
 
@@ -592,6 +593,6 @@ function custom_notes_display_admin_order_meta( $order ){
     $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
     $direccion = get_post_meta( $order_id, 'dir_recogida', true );
     if ($direccion != '') {
-        echo '<p><strong>'.__('Dirección de Recogida').':</strong><br> ' . $direccion . '</p>';
+        echo '<p><strong>'.__('Direccion, Hotel ó Número de Vuelo').':</strong><br> ' . $direccion . '</p>';
     }
 }

@@ -440,6 +440,13 @@ $cmb_home_contact->add_field( array(
 ) );
 
 $cmb_home_contact->add_field( array(
+    'id'        => $prefix . 'home_contact_linkedin',
+    'name'      => esc_html__( 'LinkedIn', 'urbanmove' ),
+    'desc'      => esc_html__( 'Ingresa el perfil de LinkedIn de la empresa', 'urbanmove' ),
+    'type' => 'text'
+) );
+
+$cmb_home_contact->add_field( array(
     'id'        => $prefix . 'home_contact_posttext',
     'name'      => esc_html__( 'Texto posterior a Datos de Contacto', 'urbanmove' ),
     'desc'      => esc_html__( 'Ingresa el texto descriptivo a esta zona', 'urbanmove' ),

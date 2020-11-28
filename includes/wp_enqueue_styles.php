@@ -81,19 +81,17 @@ function urbanmove_load_css() {
         wp_enqueue_style('oinsurances_datepicker_style_blue');
 
         /*- MAIN STYLE -*/
-        wp_register_style('main-style', get_template_directory_uri() . '/css/urbanmove-style.css', false, $version_remove, 'all');
+        wp_register_style('main-style', get_template_directory_uri() . '/css/urbanmove-style.min.css', false, $version_remove, 'all');
         wp_enqueue_style('main-style');
 
         /*- WOOCOMMERCE OVERRIDES -*/
         if ( class_exists( 'WooCommerce' ) ) {
-            wp_register_style('main-woocommerce-style', get_template_directory_uri() . '/css/urbanmove-woocommerce.css', false, $version_remove, 'all');
+            wp_register_style('main-woocommerce-style', get_template_directory_uri() . '/css/urbanmove-woocommerce.min.css', false, $version_remove, 'all');
             wp_enqueue_style('main-woocommerce-style');
         }
 
-        
-
         /*- MAIN MEDIAQUERIES -*/
-        wp_register_style('main-mediaqueries', get_template_directory_uri() . '/css/urbanmove-mediaqueries.css', array('main-style'), $version_remove, 'all');
+        wp_register_style('main-mediaqueries', get_template_directory_uri() . '/css/urbanmove-mediaqueries.min.css', array('main-style'), $version_remove, 'all');
         wp_enqueue_style('main-mediaqueries');
 
         /*- WORDPRESS STYLE -*/
