@@ -1,8 +1,80 @@
+var validateForm = true;
 AOS.init();
+
+
+/* SET COOKIES */
+function setCookie(cname, cvalue, exdays) {
+    "use strict";
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+/* GET COOKIES */
+function getCookie(cname) {
+    "use strict";
+    var name = cname + "=",
+        ca = document.cookie.split(';'),
+        i = 0;
+    for (i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 /* CUSTOM ON LOAD FUNCTIONS */
 function documentCustomLoad() {
     "use strict";
     console.log('Functions Correctly Loaded');
+
+
+    jQuery('.btn-submit').on('click', function(e) {
+        e.preventDefault();
+        validateForm = true;
+        var atLeastOneChecked = false;
+
+        jQuery("input[type=radio]").each(function() {
+            if (jQuery(this).attr("checked") == "checked") {
+                atLeastOneChecked = true;
+            }
+        });
+
+        if (!atLeastOneChecked) {
+            validateForm = false;
+        }
+
+        if (jQuery('#origen').val() === '') {
+            validateForm = false;
+        }
+
+        if (jQuery('#destino').val() === '') {
+            validateForm = false;
+        }
+
+        if (jQuery('#fechaOrigen').val() === '') {
+            validateForm = false;
+        }
+
+        if (jQuery('#fechaRegreso').val() === '') {
+            validateForm = false;
+        }
+
+        if (validateForm == true) {
+            jQuery('#errorForm').addClass('d-none');
+            jQuery('#searchForm').submit();
+        } else {
+            jQuery('#errorForm').removeClass('d-none');
+            return false;
+        }
+
+    });
 
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 3,
@@ -84,5 +156,23 @@ function documentCustomLoad() {
             jQuery('#fechaRegresoCont').addClass('d-none');
         }
     });
+
+    /* COOKIE CONSENT */
+    // IF COOKIE IF SET OR NOT
+    var cookieElement = document.getElementsByClassName('urbanmove-privacy-policy-accept');
+    var cookieConsent = getCookie("cookie_consent");
+    if (cookieConsent != '') {
+        cookieElement[0].classList.add("hidden-policy");
+    } else {
+        cookieElement[0].classList.remove("hidden-policy");
+    }
+
+    // SET COOKIE ON CLICK
+    var cookieBtn = document.getElementById('privacy-policy-accept-btn');
+    cookieBtn.addEventListener("click", function() {
+        setCookie('cookie_consent', 'cookie_consent', 7);
+        var cookieElement = document.getElementsByClassName('urbanmove-privacy-policy-accept');
+        cookieElement[0].classList.add("hidden-policy");
+    }, false);
 }
 document.addEventListener("DOMContentLoaded", documentCustomLoad, false);

@@ -683,3 +683,81 @@ a {
         line-height: 1.3rem;
     }
 }
+
+.urbanmove-privacy-policy-accept {
+    z-index: 9999999;
+    position: fixed;
+    bottom: 0;
+    right: 30px;
+    max-width: 50vw;
+    background: #fbfbfb;
+    padding: 2rem;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    letter-spacing: -1px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+
+
+    & a {
+        color: @sblue;
+
+        &:hover {
+            color: @hgreen;
+        }
+    }
+
+    & .button-container {
+        .display(flex);
+        align-items: center;
+        justify-content: center;
+
+        & .btn-privacy {
+            cursor: pointer;
+            background: @hgreen;
+            color: @white  !important;
+            border: 1px solid @hgreen;
+            padding: 0.6rem 2.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 900;
+
+            &:hover {
+                background: none transparent;
+                color: @sblue  !important;
+            }
+        }
+
+        & .cookies-multiple {
+            .display(flex);
+            align-items: center;
+            font-size: 0.9rem;
+            justify-content: space-between;
+            border: 1px solid #d2d2d2;
+            flex: 0 0 80%;
+            padding: 5px;
+
+            & label {
+                margin: 0;
+            }
+
+            & .btn-multiple {
+                border-radius: 0;
+                background: #050202;
+                color: @white  !important;
+            }
+        }
+    }
+
+    & .multi-collapse {
+        margin-top: 10px;
+    }
+}
+
+.hidden-policy {
+    display: none;
+}
+
+.error-form {
+    width: 100%;
+    display: block;
+}

@@ -15,7 +15,7 @@
             <select name="search-origen" id="origen" class="form-control">
                 <option value="" selected disabled><?php _e('Busque y seleccione de la lista su lugar de recogida', 'urbanmove'); ?></option>
                 <?php foreach ($arr_origenes as $key => $value) { ?>
-                    <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -23,7 +23,7 @@
             <select name="search-destino" id="destino" class="form-control">
                 <option value="" selected disabled><?php _e('Busque su lugar de destino', 'urbanmove'); ?></option>
                 <?php foreach ($arr_destinos as $key => $value) { ?>
-                    <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="search-form-item col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
+            <small id="errorForm" class="error-form d-none"><?php _e('Por favor rellene todos los campos', 'urbanmove'); ?></small>
             <button type="submit" class="btn btn-md btn-submit"><?php _e('Encuentre su traslado', 'urbanmove'); ?></button>
         </div>
     </div>

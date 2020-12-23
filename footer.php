@@ -37,6 +37,13 @@
         </div>
     </div>
 </footer>
+<?php $cookies_options = get_option('umv_cookie_settings'); ?>
+<div class="urbanmove-privacy-policy-accept hidden-policy" id="urbanmove-privacy-policy-accept">
+    <p class="text-center small"><?php echo $cookies_options['cookie_text']; ?> <a href="<?php echo get_permalink($cookies_options['cookie_link']); ?>" class="font-weight-bold"><?php _e( "aquí", 'urbanmove' ) ?></a>.</p>
+    <div class="button-container">
+        <a class="btn btn-sm btn-outline-elephant btn-privacy" id="privacy-policy-accept-btn"><?php _e( "Aceptar", 'urbanmove' ) ?></a>
+    </div>
+</div>
 <?php wp_footer() ?>
 </body>
 
