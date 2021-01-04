@@ -1,4 +1,5 @@
 var validateForm = true;
+var checkedVal = 0;
 AOS.init();
 
 
@@ -34,11 +35,17 @@ function documentCustomLoad() {
     "use strict";
     console.log('Functions Correctly Loaded');
 
+    
+    jQuery("input[type=radio]").on('click', function() {
+        checkedVal = jQuery(this).val();
+        console.log(checkedVal);
+    });
 
     jQuery('.btn-submit').on('click', function(e) {
         e.preventDefault();
         validateForm = true;
         var atLeastOneChecked = false;
+        
 
         jQuery("input[type=radio]").each(function() {
             if (jQuery(this).attr("checked") == "checked") {
@@ -62,7 +69,14 @@ function documentCustomLoad() {
             validateForm = false;
         }
 
-        if (jQuery('#fechaRegreso').val() === '') {
+        
+        if (checkedVal != 2) {
+            if (jQuery('#fechaRegreso').val() === '') {
+                validateForm = false;
+            }
+        }
+
+        if (jQuery('#quantity').val() === '') {
             validateForm = false;
         }
 

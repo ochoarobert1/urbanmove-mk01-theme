@@ -517,82 +517,86 @@ function my_custom_checkout_field($checkout)
         'placeholder'   => __('Ingrese donde pasaremos por ud.'),
     ), $checkout->get_value('dir_recogida'));
 
-    
+
 
     echo '</div>';
 }
 
 add_filter('woocommerce_email_order_meta_keys', 'my_custom_order_meta_keys');
 
-function my_custom_order_meta_keys( $keys ) {
-     $keys[] = 'Direccion, Hotel ó Número de Vuelo '; // This will look for a custom field called 'Tracking Code' and add it to emails
-     $keys[] = 'Voy a requerir envío de factura por email'; // This will look for a custom field called 'Tracking Code' and add it to emails
-     $keys[] = 'NIF'; // This will look for a custom field called 'Tracking Code' and add it to emails
-     return $keys;
+function my_custom_order_meta_keys($keys)
+{
+    $keys[] = 'Direccion, Hotel ó Número de Vuelo '; // This will look for a custom field called 'Tracking Code' and add it to emails
+    $keys[] = 'Voy a requerir envío de factura por email'; // This will look for a custom field called 'Tracking Code' and add it to emails
+    $keys[] = 'NIF'; // This will look for a custom field called 'Tracking Code' and add it to emails
+    return $keys;
 }
 
-function kia_display_email_order_meta( $order, $sent_to_admin, $plain_text ) { 
-	$nif = $order->get_meta( '_billing_nif' ); 
-	$factura = $order->get_meta( '_billing_required' ); 
-    $direccion = $order->get_meta( 'dir_recogida' ); 
+function kia_display_email_order_meta($order, $sent_to_admin, $plain_text)
+{
+    $nif = $order->get_meta('_billing_nif');
+    $factura = $order->get_meta('_billing_required');
+    $direccion = $order->get_meta('dir_recogida');
 
     echo '<h2 style="color: #007e98;font-family: &quot;Helvetica Neue&quot;, Helvetica, Roboto, Arial, sans-serif;font-size: 18px;font-weight: bold;line-height: 130%;margin: 0 0 18px;text-align: left">Datos Adicionales</h2>';
 
     if ($nif != '') {
-        echo '<p><strong>'.__('NIF').':</strong> ' . $nif . '</p>';
+        echo '<p><strong>' . __('NIF') . ':</strong> ' . $nif . '</p>';
     }
     if ($factura != '') {
         $checktext = ($factura == 1) ? 'Si' : 'No';
-        echo '<p><strong>'.__('Requiere envío de factura por email').':</strong> ' . $checktext . '</p>';
+        echo '<p><strong>' . __('Requiere envío de factura por email') . ':</strong> ' . $checktext . '</p>';
     } else {
-        echo '<p><strong>'.__('Requiere envío de factura por email').':</strong> No </p>';
+        echo '<p><strong>' . __('Requiere envío de factura por email') . ':</strong> No </p>';
     }
-    
+
     if ($direccion != '') {
-        echo '<p><strong>'.__('Direccion, Hotel ó Número de Vuelo').':</strong><br> ' . $direccion . '</p>';
+        echo '<p><strong>' . __('Direccion, Hotel ó Número de Vuelo') . ':</strong><br> ' . $direccion . '</p>';
     }
-	
-} 
-add_action('woocommerce_email_customer_details', 'kia_display_email_order_meta', 30, 3 );
+}
+add_action('woocommerce_email_customer_details', 'kia_display_email_order_meta', 30, 3);
 
 /**
  * Update the order meta with field value
  */
-add_action( 'woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta' );
+add_action('woocommerce_checkout_update_order_meta', 'my_custom_checkout_field_update_order_meta');
 
-function my_custom_checkout_field_update_order_meta( $order_id ) {
-    if ( ! empty( $_POST['dir_recogida'] ) ) {
-        update_post_meta( $order_id, 'dir_recogida', sanitize_text_field( $_POST['dir_recogida'] ) );
+function my_custom_checkout_field_update_order_meta($order_id)
+{
+    if (!empty($_POST['dir_recogida'])) {
+        update_post_meta($order_id, 'dir_recogida', sanitize_text_field($_POST['dir_recogida']));
     }
 
-    if ( ! empty( $_POST['_billing_required'] ) ) {
-        update_post_meta( $order_id, '_billing_required', sanitize_text_field( $_POST['_billing_required'] ) );
+    if (!empty($_POST['_billing_required'])) {
+        update_post_meta($order_id, '_billing_required', sanitize_text_field($_POST['_billing_required']));
     }
 
-    if ( ! empty( $_POST['_billing_nif'] ) ) {
-        update_post_meta( $order_id, 'NIF', sanitize_text_field( $_POST['_billing_nif'] ) );
+    if (!empty($_POST['_billing_nif'])) {
+        update_post_meta($order_id, 'NIF', sanitize_text_field($_POST['_billing_nif']));
     }
 }
 
-add_action( 'woocommerce_admin_order_data_after_billing_address', 'custom_billing_display_admin_order_meta', 10, 1 );
-function custom_billing_display_admin_order_meta( $order ){
-    $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-    $nif = get_post_meta( $order_id, '_billing_nif', true );
+add_action('woocommerce_admin_order_data_after_billing_address', 'custom_billing_display_admin_order_meta', 10, 1);
+function custom_billing_display_admin_order_meta($order)
+{
+    $order_id = method_exists($order, 'get_id') ? $order->get_id() : $order->id;
+    $nif = get_post_meta($order_id, '_billing_nif', true);
     if ($nif != '') {
-        echo '<p><strong>'.__('NIF').':</strong> ' . $nif . '</p>';
+        echo '<p><strong>' . __('NIF') . ':</strong> ' . $nif . '</p>';
     }
-    $check = get_post_meta( $order_id, '_billing_required', true );
+    $check = get_post_meta($order_id, '_billing_required', true);
     if ($check != '') {
         $checktext = ($check == 1) ? 'Si' : 'No';
-        echo '<p><strong>'.__('Requiere envío de factura por email').':</strong> ' . $checktext . '</p>';
+        echo '<p><strong>' . __('Requiere envío de factura por email') . ':</strong> ' . $checktext . '</p>';
     }
 }
 
-add_action( 'woocommerce_admin_order_data_after_shipping_address', 'custom_notes_display_admin_order_meta', 10, 1 );
-function custom_notes_display_admin_order_meta( $order ){
-    $order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
-    $direccion = get_post_meta( $order_id, 'dir_recogida', true );
+add_action('woocommerce_admin_order_data_after_shipping_address', 'custom_notes_display_admin_order_meta', 10, 1);
+function custom_notes_display_admin_order_meta($order)
+{
+    $order_id = method_exists($order, 'get_id') ? $order->get_id() : $order->id;
+    $direccion = get_post_meta($order_id, 'dir_recogida', true);
     if ($direccion != '') {
-        echo '<p><strong>'.__('Direccion, Hotel ó Número de Vuelo').':</strong><br> ' . $direccion . '</p>';
+        echo '<p><strong>' . __('Direccion, Hotel ó Número de Vuelo') . ':</strong><br> ' . $direccion . '</p>';
     }
 }
