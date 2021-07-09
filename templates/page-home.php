@@ -68,7 +68,7 @@
                     <div class="slider-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <?php $arr_slider = get_post_meta(get_the_ID(), 'umv_home_slider_group', true); ?>
                         <?php if (!empty($arr_slider)) : ?>
-                        <div class="swiper-container">
+                        <div class="swiper-container col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="swiper-wrapper">
                                 <?php foreach ($arr_slider as $item) { ?>
                                 <div class="swiper-slide">
